@@ -19,7 +19,6 @@ def indices_of_every_kth_period(list_of_ids, period_id, k):
 
 
 def split_list_on_indices(list_to_split, indices):
-    #indices.append(len(arr))
     indices.insert(0, 0)
 
     split_list = [list_to_split[indices[i]:indices[i+1]] for i in range(len(indices)-1)]
@@ -52,9 +51,5 @@ def get_tensor_dataset(list_of_ids, period_id, n, k):
     period_indices = indices_of_every_kth_period(list_of_ids, period_id, k)
     split_list = split_list_on_indices(list_of_ids, period_indices)
     features, labels = get_padded_size_n(split_list, n)
-
-    #return features, labels
-
-
 
     return TensorDataset(torch.tensor(features), torch.tensor(labels))

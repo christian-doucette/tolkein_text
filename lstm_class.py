@@ -7,23 +7,13 @@ import torch
 #===========================================#
 
 # This is the LSTM Neural Network Class. The architecture of the network is this:
-# input -> embedding layer -> LSTM layer -> dropout layer -> fully connected linear layer -> output
+# input -> embedding layer -> LSTM layers -> dropout layer -> fully connected linear layer -> output
 
 # input is a list of 19 words represented by their ids in the vocabulary, label is the following word
 
 # output is a list of logits over the set of words, where higher means a higher chance that that word follows
 # applying softmax to the output turns it into a pprobability distribution over all the words
 
-
-
-# For example,
-
-# LSTM(
-#   (embedding): Embedding(13276, 512)
-#   (lstm): LSTM(512, 256, num_layers=3, batch_first=True, dropout=0.5)
-#   (dropout): Dropout(p=0.3, inplace=False)
-#   (fc): Linear(in_features=256, out_features=1, bias=True)
-# )
 
 
 
