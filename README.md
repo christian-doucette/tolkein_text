@@ -1,9 +1,9 @@
 # Tolkein Text
-Tolkein Text is a personal project that I created to practice implementing Machine Learning, specifically NLP, in Pytorch. It uses a Neural Network Language Model to generates text based off *The Fellowship of the Ring*. The Neural Network is an LSTM network built with Pytorch.
+Tolkein Text is a personal project that I created to practice implementing Machine Learning, specifically NLP, in Pytorch. It uses a Neural Network Language Model to generate text based off *The Fellowship of the Ring*.
 
 ### Some Examples
-"But the road ran up again to the top."
-"It is probably that this evening has gone now into light."
+"But the road ran up again to the top."  
+"It is probably that this evening has gone now into light."  
 "Hope I wish to you."
 
 These sentences definitely capture the feel of Tolkein's writing, but are totally original!
