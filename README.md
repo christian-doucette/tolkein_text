@@ -16,7 +16,7 @@ The preprocessing stage can be broken down into these steps:
 4. Build vocabulary that associates each word to a unique id. This includes word_to_id (dictionary), and id_to_word (direct access table)
 5. Map each word in the text to its id
 6. Add each word_id in the text to dataset as a label with the 19 word_ids before it as its feature
-7. Create DataLoader with batch size of 32. This will allow me to cycle through all the data by random sets of 32 feature/label pairs.
+7. This list of (Feature, Label) pairs is the training data
 
 ### Network Architecture
 The network has the following architecture:
@@ -29,4 +29,4 @@ Output is a list of vocab_size values, where a higher value means that that word
 Using the network architecture stated above and cross entropy loss, I find the weights that minimize loss on the training data. These weights are calculated with gradient descent using Pytorch's Autograd package.
 
 ### Text Generation
-By applying the softmax function to the output of the network, I get a probability distribution over all remaining words. Then, I take a weighted random choice of these to decide the next word.
+By applying the softmax function to the output of the network, I get a probability distribution over all words in the vocabulary. Then, I take a weighted random choice of these to decide the next word.
