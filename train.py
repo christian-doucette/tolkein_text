@@ -6,27 +6,25 @@ import torch.nn.functional
 from torch.utils.data import DataLoader
 
 
-import preprocess_data
-import process_data
-import vocab
+import preprocess
 import lstm_class
 
-n = 20 #20
-k = 20 #20
-min_occurences = 5 #1
-batch_size = 32 #1
+n = 2 #10
+min_occurences = 1 #5
+batch_size = 1 #32
 
 
-lotr1_text = preprocess_data.load_from_url("http://ae-lib.org.ua/texts-c/tolkien__the_lord_of_the_rings_1__en.htm")
+#lotr1_text = preprocess.load_from_url("http://ae-lib.org.ua/texts-c/tolkien__the_lord_of_the_rings_1__en.htm")
 
-#lotr1_text = "and the best thing is . that the greatest thing the best thing the . and the best thing is that . the best".split()
+lotr1_text = "and the best thing is . that the greatest thing the best thing the . and the best thing is that . the best".split()
+#Counter({'greatest': 8, 'that': 7, 'is': 6, 'and': 5, '.': 4, 'thing': 3, 'best': 2, 'the': 1})
 
-word_to_id, id_to_word = vocab.get_vocab(lotr1_text, min_occurences)
+word_to_id, id_to_word = preprocess.get_vocab(lotr1_text, min_occurences)
 lotr1_ids =  [word_to_id[word] for word in lotr1_text]
 
 
 
-training_dataset = process_data.get_tensor_dataset(lotr1_ids, word_to_id["."], n, k)
+training_dataset = preprocess.get_tensor_dataset(lotr1_ids, n)
 training_loader = DataLoader(training_dataset, batch_size=batch_size, drop_last=True, shuffle=True)
 
 
@@ -42,7 +40,7 @@ hidden_dim = 256        # size of the hidden state
 n_layers = 2            # number of LSTM layers
 
 # Training parameters
-epochs = 10
+epochs = 10 #10
 learning_rate = 0.001
 clip = 1
 
@@ -90,8 +88,9 @@ softmax = nn.Softmax(dim=0)
 def predict_from_ids(network, ids_list, batch_size=1):
 
     #batch size is 1 as it is a single input
-    hidden = net.init_hidden(batch_size)
-    input = torch.tensor(ids_list)
+    hidden = network.init_hidden(batch_size)
+
+    input = torch.tensor([ids_list])
 
     output, hidden = network.forward(input, hidden)
 
@@ -105,17 +104,18 @@ def predict_from_ids(network, ids_list, batch_size=1):
 
 
 
-for j in range(0, 10):
+for j in range(0, 15):
     print(f'\n\nPrediction {j+1}')
     num_words = 300
 
-    ids = [0] * (n-1)
-    for i in range(num_words):
+    #First ID in generation is a period, so it begins with how it thinks a new sentence will start
+    ids = [word_to_id["."]]
+    for _ in range(num_words):
         last_n_ids = ids[-n:]
-        prediction = predict_from_ids(net, [last_n_ids])
+        prediction = predict_from_ids(net, last_n_ids)
         ids.append(prediction)
 
-    predicted_string = ' '.join([id_to_word[id] for id in ids[n:]])
+    predicted_string = ' '.join([id_to_word[id] for id in ids[1:]])
     print(predicted_string)
 
 

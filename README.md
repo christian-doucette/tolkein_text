@@ -4,9 +4,14 @@ Tolkein Text is a personal project that I created to practice implementing Machi
 ### Some Examples
 "But the road ran up again to the top."  
 "It is probably that this evening has gone now into light."  
-"Hope I wish to you."
+"Before long the white moon stood in the wood."  
+"The land was falling away but the whole path grew low,"  
+"Hope I wish to you."  
+"For a moment frodo saw no colour , but with a mile , a small sword that lay in leaves falling like stars."  
+"Doubt was a day off; but we have better doubt the ruling chance that we should go , so that a year have wandered upon you"  
 
-These sentences definitely capture the feel of Tolkein's writing, but are totally original!
+
+These sentences definitely capture the feel of Tolkein's writing, but are all original sentences! I especially love the fact that it creates its own simile, "leaves falling like stars", that does not appear in the original text.
 
 ### Preprocessing
 The preprocessing stage can be broken down into these steps:
