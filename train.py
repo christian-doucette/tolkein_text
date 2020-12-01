@@ -2,21 +2,20 @@ import numpy as np
 import torch
 import torch.optim
 import torch.nn as nn
-import torch.nn.functional
 from torch.utils.data import DataLoader
 
 
 import preprocess
 import lstm_class
 
-n = 2 #10
-min_occurences = 1 #5
-batch_size = 1 #32
+n = 9 #2                    # Number of words used in prediction
+min_occurences = 2 #1       # Minimum number of occurences of a word for it to occur in vocabulary
+batch_size = 32 #1
 
 
-#lotr1_text = preprocess.load_from_url("http://ae-lib.org.ua/texts-c/tolkien__the_lord_of_the_rings_1__en.htm")
+lotr1_text = preprocess.load_from_url("http://ae-lib.org.ua/texts-c/tolkien__the_lord_of_the_rings_1__en.htm")
 
-lotr1_text = "and the best thing is . that the greatest thing the best thing the . and the best thing is that . the best".split()
+#lotr1_text = "and the best thing is . that the greatest thing the best thing the . and the best thing is that . the best".split()
 #Counter({'greatest': 8, 'that': 7, 'is': 6, 'and': 5, '.': 4, 'thing': 3, 'best': 2, 'the': 1})
 
 word_to_id, id_to_word = preprocess.get_vocab(lotr1_text, min_occurences)
@@ -30,7 +29,7 @@ training_loader = DataLoader(training_dataset, batch_size=batch_size, drop_last=
 
 
 #=======================================#
-#             LSTM Parameters           #
+#           Network Parameters          #
 #=======================================#
 
 # Size parameters
@@ -47,7 +46,7 @@ clip = 1
 
 
 #=======================================#
-#         Initialize/Train RNN          #
+#       Initialize/Train Network        #
 #=======================================#
 
 
@@ -77,49 +76,7 @@ for e in range(epochs):
         nn.utils.clip_grad_norm_(net.parameters(), clip)
         optimizer.step()
 
+
+# Saves Trained Model
 net.eval()
-
-
-#=======================================#
-#         Generate Sample Text          #
-#=======================================#
-softmax = nn.Softmax(dim=0)
-
-def predict_from_ids(network, ids_list, batch_size=1):
-
-    #batch size is 1 as it is a single input
-    hidden = network.init_hidden(batch_size)
-
-    input = torch.tensor([ids_list])
-
-    output, hidden = network.forward(input, hidden)
-
-    last_word_logits = output[0]
-
-    predicted_probabilities = softmax(last_word_logits).detach().numpy()
-
-    # Picks a probability-weighted random choice of the words
-    prediction = np.random.choice(len(last_word_logits), p=predicted_probabilities)
-    return prediction
-
-
-
-for j in range(0, 15):
-    print(f'\n\nPrediction {j+1}')
-    num_words = 300
-
-    #First ID in generation is a period, so it begins with how it thinks a new sentence will start
-    ids = [word_to_id["."]]
-    for _ in range(num_words):
-        last_n_ids = ids[-n:]
-        prediction = predict_from_ids(net, last_n_ids)
-        ids.append(prediction)
-
-    predicted_string = ' '.join([id_to_word[id] for id in ids[1:]])
-    print(predicted_string)
-
-
-
-
-
-exit(0)
+torch.save(net, 'trained_model/trained_model.pt')
