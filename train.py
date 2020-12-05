@@ -1,17 +1,29 @@
+import json
 import numpy as np
 import torch
 import torch.optim
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-
 import preprocess
 import lstm_class
 
+
+
+#=======================================#
+#        Preprocessing Parameters       #
+#=======================================#
+
 n = 9 #2                    # Number of words used in prediction
-min_occurences = 2 #1       # Minimum number of occurences of a word for it to occur in vocabulary
+min_occurences = 8 #1       # Minimum number of occurences of a word for it to occur in vocabulary
 batch_size = 32 #1
 
+
+
+
+#=======================================#
+#             Preprocessing             #
+#=======================================#
 
 lotr1_text = preprocess.load_from_url("http://ae-lib.org.ua/texts-c/tolkien__the_lord_of_the_rings_1__en.htm")
 
@@ -19,12 +31,12 @@ lotr1_text = preprocess.load_from_url("http://ae-lib.org.ua/texts-c/tolkien__the
 #Counter({'greatest': 8, 'that': 7, 'is': 6, 'and': 5, '.': 4, 'thing': 3, 'best': 2, 'the': 1})
 
 word_to_id, id_to_word = preprocess.get_vocab(lotr1_text, min_occurences)
+
 lotr1_ids =  [word_to_id[word] for word in lotr1_text]
-
-
 
 training_dataset = preprocess.get_tensor_dataset(lotr1_ids, n)
 training_loader = DataLoader(training_dataset, batch_size=batch_size, drop_last=True, shuffle=True)
+
 
 
 
@@ -77,6 +89,14 @@ for e in range(epochs):
         optimizer.step()
 
 
-# Saves Trained Model
+
+
+#=======================================#
+#         Saves Trained Network         #
+#=======================================#
+
 net.eval()
 torch.save(net, 'trained_model/trained_model.pt')
+
+with open('trained_model/word_to_id.json', 'w') as fp:
+    json.dump(word_to_id, fp, indent=4)

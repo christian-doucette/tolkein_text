@@ -27,8 +27,8 @@ def parse_and_clean(input):
     text = input.getText()
     text = re.sub('Mr.', 'Mr ', text)                                           # Removes changes Mr. to Mr to avoid period confusion
     text = re.sub('[\'\"‘]', '', text)                                          # Removes all single/double quotes
-    text = re.sub(r"(\.|\,|\(|\)|\;|\:)", lambda x: f' {x.group(1)} ', text)    # Adds space on both sides of punctuation
-    text = re.sub('[^0-9a-zA-Z.,:;()]+', ' ', text)                             # Replaces all remaining non-alphanumeric/punctuation with space
+    text = re.sub(r"(\.|\,|\;|\:)", lambda x: f' {x.group(1)} ', text)          # Adds space on both sides of punctuation
+    text = re.sub('[^0-9a-zA-Z.,:;]+', ' ', text)                               # Replaces all remaining non-alphanumeric/punctuation with space
     text = text.lower()                                                         # Sets to lowercase
     return text
 
@@ -61,9 +61,7 @@ def get_vocab(corpus, min_occurences):
     vocab_tuples = vocab_top.most_common(len(vocab_top))
 
     word_to_id = Counter({word: i+1 for i,(word, c) in enumerate(vocab_tuples)})
-
-    id_to_word = [word for word, index in word_to_id.items()]
-    id_to_word.insert(0, "_")
+    id_to_word = ["_"] + [word for word, index in word_to_id.items()]
 
     return word_to_id, id_to_word
 

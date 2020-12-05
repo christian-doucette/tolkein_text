@@ -9,6 +9,11 @@ Tolkein Text is a personal project that I created to practice implementing Machi
 "Hope I wish to you."  
 "For a moment frodo saw no colour , but with a mile , a small sword that lay in leaves falling like stars."  
 "Doubt was a day off; but we have better doubt the ruling chance that we should go , so that a year have wandered upon you"  
+ yes , there must be many dark creatures, and they have gone tonight.
+"At the far brow the hills were rising, and the line of trees lies beyond the earth, pale and brown"
+"I do not know, if we ought to go, Elrond answered."
+"I was rather glad to return, and a song passed out and to that land of the river."
+"And you can say that they are shining, answered Strider, looking at the fire.
 
 
 These sentences definitely capture the feel of Tolkein's writing, but are all original sentences! I especially love the fact that it creates its own simile, "leaves falling like stars", that does not appear in the original text.
