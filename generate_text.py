@@ -42,22 +42,26 @@ def predict_next_id(network, ids_list, batch_size=1):
 
 
 n = 9
-num_words = 500
+num_sentences = 10
 num_paragraphs = 1
-seed_text = #[]
+seed_text = "the forest was "
 
 for j in range(0, num_paragraphs):
     print(f'\n\nPrediction {j+1}')
 
     #First ID in generation is a period, so it begins with how it thinks a new sentence will start
-    ids = [word_to_id[word] for word in seed_text]
-    if len(ids) == 0:
-        ids = [word_to_id["."]]
+    ids = [word_to_id["."]] + [word_to_id[word] for word in seed_text.split()]
 
-    for _ in range(num_words):
+
+    num_periods = 0
+    while (num_periods < num_sentences):
         last_n_ids = ids[-n:]
         prediction = predict_next_id(net, last_n_ids)
         ids.append(prediction)
+
+        if prediction == word_to_id["."]:
+            num_periods += 1
+
 
     predicted_string = ' '.join([id_to_word[id] for id in ids[1:]])
     print(predicted_string)

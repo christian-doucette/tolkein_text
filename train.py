@@ -15,7 +15,7 @@ import lstm_class
 #=======================================#
 
 n = 9 #2                    # Number of words used in prediction
-min_occurences = 8 #1       # Minimum number of occurences of a word for it to occur in vocabulary
+min_occurences = 10 #1       # Minimum number of occurences of a word for it to occur in vocabulary
 batch_size = 32 #1
 
 
@@ -25,16 +25,17 @@ batch_size = 32 #1
 #             Preprocessing             #
 #=======================================#
 
-lotr1_text = preprocess.load_from_url("http://ae-lib.org.ua/texts-c/tolkien__the_lord_of_the_rings_1__en.htm")
+lotr_full_text = preprocess.load_full_text()
 
 #lotr1_text = "and the best thing is . that the greatest thing the best thing the . and the best thing is that . the best".split()
 #Counter({'greatest': 8, 'that': 7, 'is': 6, 'and': 5, '.': 4, 'thing': 3, 'best': 2, 'the': 1})
 
-word_to_id, id_to_word = preprocess.get_vocab(lotr1_text, min_occurences)
+word_to_id, id_to_word = preprocess.get_vocab(lotr_full_text, min_occurences)
 
-lotr1_ids =  [word_to_id[word] for word in lotr1_text]
+lotr_full_ids =  [word_to_id[word] for word in lotr_full_text]
 
-training_dataset = preprocess.get_tensor_dataset(lotr1_ids, n)
+
+training_dataset = preprocess.get_tensor_dataset(lotr_full_ids, n)
 training_loader = DataLoader(training_dataset, batch_size=batch_size, drop_last=True, shuffle=True)
 
 

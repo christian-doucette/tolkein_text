@@ -24,29 +24,44 @@ from bs4 import BeautifulSoup
 
 # cleans up text by removing extraneous characters
 def parse_and_clean(input):
-    text = input.getText()
-    text = re.sub('Mr.', 'Mr ', text)                                           # Removes changes Mr. to Mr to avoid period confusion
+    text = input.lower()
+    text = re.sub('mr\.', 'mr ', text)                                           # Removes changes Mr. to Mr to avoid period confusion
+
+    text = re.sub('can.t', 'cant', text)                                       #
+    text = re.sub('isn.t', 'isnt', text)                                       #
+    text = re.sub('won.t', 'wont', text)                                       #
+    text = re.sub('ain.t', 'aint', text)                                       #
+    text = re.sub('aren.t', 'arent', text)                                       #
+    text = re.sub('didn.t', 'didnt', text)                                       #
+    text = re.sub('doesn.t', 'doesnt', text)                                       #
+    text = re.sub('hadn.t', 'hadnt', text)                                       #
+    text = re.sub('haven.t', 'havent', text)                                       #
+    text = re.sub('mustn.t', 'mustnt', text)                                       #
+    text = re.sub('shouldn.t', 'shouldnt', text)                                       #
+    text = re.sub('we.ve', 'weve', text)                                       #
+
     text = re.sub('[\'\"‘]', '', text)                                          # Removes all single/double quotes
-    text = re.sub(r"(\.|\,|\;|\:)", lambda x: f' {x.group(1)} ', text)          # Adds space on both sides of punctuation
-    text = re.sub('[^0-9a-zA-Z.,:;]+', ' ', text)                               # Replaces all remaining non-alphanumeric/punctuation with space
-    text = text.lower()                                                         # Sets to lowercase
+    text = re.sub(r"(\.|\,|\;|\:|\!)", lambda x: f' {x.group(1)} ', text)          # Adds space on both sides of punctuation
+    text = re.sub(re.compile('[^\w,.!:;]+', re.UNICODE), ' ', text)            # Replaces all remaining non-alphanumeric/punctuation with space
+
     return text
 
 
 
 
 # loads and parses html text for Fellowship of the Ring
-def load_from_url(url):
-    fp = urllib.request.urlopen("http://ae-lib.org.ua/texts-c/tolkien__the_lord_of_the_rings_1__en.htm")
-    mybytes = fp.read()
-    mystr = mybytes.decode("latin-1")
+def load_full_text():
+    with open('data/fotr.txt', 'r') as file:
+        fotr = parse_and_clean(file.read())
 
-    soup = BeautifulSoup(mystr, 'html.parser')
-    p_tags = soup.find_all('p')
-    p_tags_processed_text = list(map(parse_and_clean, p_tags))[109:3955]
-    full_text = "".join(p_tags_processed_text)
-    #Fellowship Start: 109, End: 3954 (inclusive)
-    return full_text.split()
+    with open('data/tt.txt', 'r') as file:
+        tt = parse_and_clean(file.read())
+
+    with open('data/rotk.txt', 'r') as file:
+        rotk = parse_and_clean(file.read())
+
+    lotr_full = fotr + tt + rotk
+    return lotr_full.split()
 
 
 
