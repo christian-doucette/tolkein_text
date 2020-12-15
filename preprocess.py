@@ -1,17 +1,16 @@
-import urllib.request
 import re
 import torch
 from torch.utils.data import TensorDataset
 from collections import Counter
-from bs4 import BeautifulSoup
 
 #===========================================#
 #                Description                #
 #===========================================#
 
 # This file contains the functions necessary for preprocessing, and is loaded by train.py
+
 # 1. parse_and_clean
-# 2. load_from_url
+# 2. load_full_text
 # 3. get_vocab
 # 4. get_tensor_dataset
 
@@ -24,32 +23,17 @@ from bs4 import BeautifulSoup
 
 # cleans up text by removing extraneous characters
 def parse_and_clean(input):
-    text = input.lower()
-    text = re.sub('mr\.', 'mr ', text)                                           # Removes changes Mr. to Mr to avoid period confusion
-
-    text = re.sub('can.t', 'cant', text)                                       #
-    text = re.sub('isn.t', 'isnt', text)                                       #
-    text = re.sub('won.t', 'wont', text)                                       #
-    text = re.sub('ain.t', 'aint', text)                                       #
-    text = re.sub('aren.t', 'arent', text)                                       #
-    text = re.sub('didn.t', 'didnt', text)                                       #
-    text = re.sub('doesn.t', 'doesnt', text)                                       #
-    text = re.sub('hadn.t', 'hadnt', text)                                       #
-    text = re.sub('haven.t', 'havent', text)                                       #
-    text = re.sub('mustn.t', 'mustnt', text)                                       #
-    text = re.sub('shouldn.t', 'shouldnt', text)                                       #
-    text = re.sub('we.ve', 'weve', text)                                       #
-
-    text = re.sub('[\'\"‘]', '', text)                                          # Removes all single/double quotes
-    text = re.sub(r"(\.|\,|\;|\:|\!)", lambda x: f' {x.group(1)} ', text)          # Adds space on both sides of punctuation
-    text = re.sub(re.compile('[^\w,.!:;]+', re.UNICODE), ' ', text)            # Replaces all remaining non-alphanumeric/punctuation with space
+    text = input.lower()                                                        # Maps to lowercase
+    text = re.sub('mr\.', 'mr ', text)                                          # Removes changes Mr. to Mr to avoid period confusion
+    text = re.sub(r"(\.|\,|\;|\:|\!|\?)", lambda x: f' {x.group(1)} ', text)    # Adds space on both sides of punctuation
+    text = re.sub(re.compile('[^\w,.!?:;\']+', re.UNICODE), ' ', text)          # Replaces all remaining non-alphanumeric/punctuation with space
 
     return text
 
 
 
 
-# loads and parses html text for Fellowship of the Ring
+# loads full Lord of the Rings text
 def load_full_text():
     with open('data/fotr.txt', 'r') as file:
         fotr = parse_and_clean(file.read())

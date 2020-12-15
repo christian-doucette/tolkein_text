@@ -27,9 +27,6 @@ batch_size = 32 #1
 
 lotr_full_text = preprocess.load_full_text()
 
-#lotr1_text = "and the best thing is . that the greatest thing the best thing the . and the best thing is that . the best".split()
-#Counter({'greatest': 8, 'that': 7, 'is': 6, 'and': 5, '.': 4, 'thing': 3, 'best': 2, 'the': 1})
-
 word_to_id, id_to_word = preprocess.get_vocab(lotr_full_text, min_occurences)
 
 lotr_full_ids =  [word_to_id[word] for word in lotr_full_text]
@@ -62,8 +59,8 @@ clip = 1
 #       Initialize/Train Network        #
 #=======================================#
 
-
-net = lstm_class.LSTM(vocab_size, embedding_dim, hidden_dim, n_layers)
+net = torch.load('trained_model/trained_model.pt')
+#net = lstm_class.LSTM(vocab_size, embedding_dim, hidden_dim, n_layers)
 optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
 loss_func = torch.nn.CrossEntropyLoss()
 

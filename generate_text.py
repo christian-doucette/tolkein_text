@@ -5,18 +5,28 @@ import torch.nn as nn
 import numpy as np
 import lstm_class
 
+
+#===========================================#
+#        Loads Model and word_to_id         #
+#===========================================#
+
 with open('trained_model/word_to_id.json') as json_file:
     word_to_id = Counter(json.load(json_file))
 
 id_to_word = ["_"] + [word for word, index in word_to_id.items()]
 
-
-
 net = torch.load('trained_model/trained_model.pt')
 net.eval()
+
 softmax     = nn.Softmax(dim=0)
 log_softmax = nn.LogSoftmax(dim=0)
 
+
+
+
+#===========================================#
+#        Predict Next ID Function           #
+#===========================================#
 
 def predict_next_id(network, ids_list, batch_size=1):
 
@@ -41,10 +51,22 @@ def predict_next_id(network, ids_list, batch_size=1):
 
 
 
+
+#===========================================#
+#       Text Generation Parameters          #
+#===========================================#
+
 n = 9
-num_sentences = 10
-num_paragraphs = 1
-seed_text = "the forest was "
+num_sentences = 20
+num_paragraphs = 3
+seed_text = ""
+
+
+
+
+#===========================================#
+#             Generates Text                #
+#===========================================#
 
 for j in range(0, num_paragraphs):
     print(f'\n\nPrediction {j+1}')

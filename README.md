@@ -16,6 +16,8 @@ Tolkein Text is a personal project that I created to practice implementing Machi
 "And you can say that they are shining, answered Strider, looking at the fire.
 
 
+at that moment faramir came in and gazed suddenly into the sweet darkness
+
 These sentences definitely capture the feel of Tolkein's writing, but are all original sentences! I especially love the fact that it creates its own simile, "leaves falling like stars", that does not appear in the original text.
 
 ### Preprocessing
