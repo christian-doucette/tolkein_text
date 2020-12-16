@@ -43,6 +43,7 @@ def predict_next_id(network, ids_list, batch_size=1):
 
     # Sets probability of generating the <Unknown> token to 0, then adjusts other probabilities so they still sum to 1
     predicted_probabilities[0] = 0
+    predicted_probabilities[ids_list[-1]] = 0
     predicted_probabilities = predicted_probabilities / np.sum(predicted_probabilities)
 
     # Picks a probability-weighted random choice of the words
