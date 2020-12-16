@@ -1,6 +1,11 @@
 import re
 import json
-from collections import Counter
+
+
+
+#===========================================#
+#        Load/Processing Functions          #
+#===========================================#
 
 
 # cleans up text by removing extraneous characters
@@ -31,6 +36,14 @@ def load_lotr():
 
 
 
+
+
+
+#===========================================#
+#     Stores Always-Capitalized Words       #
+#===========================================#
+
+
 with open('../trained_model/word_to_id.json') as json_file:
     word_to_id = json.load(json_file)
 
@@ -44,6 +57,13 @@ for word in lotr_full_text:
         should_capitalize[word] = False
 
 
+
+
+
+#===========================================#
+#               Manual Fixes                #
+#===========================================#
+
 should_capitalize['merry']     = True
 should_capitalize['balin']     = True
 should_capitalize['moria']     = True
@@ -51,6 +71,13 @@ should_capitalize['i']         = True
 should_capitalize['bill']      = True
 should_capitalize['orthanc']   = True
 should_capitalize['butterbur'] = True
+
+
+
+
+#===========================================#
+#     Saves in always_capitalized.json      #
+#===========================================#
 
 with open('../trained_model/always_capitalized.json', 'w') as fp:
     json.dump(should_capitalize, fp, indent=4)
