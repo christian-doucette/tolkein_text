@@ -59,8 +59,7 @@ clip = 1
 #       Initialize/Train Network        #
 #=======================================#
 
-net = torch.load('trained_model/trained_model.pt')
-#net = lstm_class.LSTM(vocab_size, embedding_dim, hidden_dim, n_layers)
+net = lstm_class.LSTM(vocab_size, embedding_dim, hidden_dim, n_layers)
 optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
 loss_func = torch.nn.CrossEntropyLoss()
 

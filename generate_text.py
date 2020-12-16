@@ -35,6 +35,7 @@ def predict_next_id(network, ids_list, batch_size=1):
 
     input = torch.tensor([ids_list])
 
+
     output, hidden = network.forward(input, hidden)
 
     last_word_logits = output.squeeze()
