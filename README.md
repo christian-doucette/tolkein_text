@@ -3,14 +3,14 @@ Tolkein Text is a personal project that I created to practice implementing Machi
 
 ### Some Examples
 "Before long the white moon stood in the wood."  
-"For a moment frodo saw no colour , but with a mile , a small sword that lay in leaves falling like stars."  
+"Arrows fell from the sky like lightning hurrying down."  
 "At that moment Faramir came in and gazed suddenly into the sweet darkness."  
 "Ever the great vale ran down into the darkness. Darker the leaves rolled suddenly through the summer mist."  
 "Then they felt once more: as swiftly as they were under the wind of the hills."  
 "And the moon was in the dark, and they lay all, grey and fading, terrible and fair."  
 "The weather pointed near the trees as the ring had lain."  
 
-These sentences definitely capture the feel of Tolkein's writing, but are all original sentences! I especially love the fact that it creates its own simile, "leaves falling like stars", that does not appear in the original text.
+These sentences definitely capture the feel of Tolkein's writing, but are all original sentences! I especially love the fact that it creates its own simile, "Arrows fell from the sky like lightning hurrying down," that does not appear in the original text.
 
 ### Preprocessing
 The preprocessing stage can be broken down into these steps:
