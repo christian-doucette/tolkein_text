@@ -80,7 +80,7 @@ def prediction(network, word2id, id2word, should_capitalize, user_input, n, num_
             last_n_ids = ids[-n:]
             prediction = predict_next_id(network, last_n_ids)
             ids.append(prediction)
-            if prediction in [word2id["."], word2id["!"], word2id["?"]]: 
+            if prediction in [word2id["."], word2id["!"], word2id["?"]]:
                 finished_sentences += 1
 
         predicted_string = add_formatting(ids, id2word, should_capitalize)
@@ -91,7 +91,7 @@ def prediction(network, word2id, id2word, should_capitalize, user_input, n, num_
 
 
 # won't run this stuff for now, just want the functions for streamlit
-"""
+
 #===========================================#
 #        Loads Model and word_to_id         #
 #===========================================#
@@ -102,7 +102,7 @@ with open('trained_model/word_to_id.json') as json_file:
 with open('trained_model/always_capitalized.json') as json_file:
     always_capitalized = json.load(json_file)
 
-id_to_word = ["_"] + [word for word, index in word_to_id.items()]
+id_to_word = ["<Unknown>"] + [word for word, index in word_to_id.items()]
 
 net = torch.load('trained_model/trained_model_strict.pt')
 net.eval()
@@ -119,7 +119,7 @@ net.eval()
 n = 9
 num_sentences = 10
 num_paragraphs = 3
-user_input = ""
+user_input = "and I say to you, my dude"
 
 
 
@@ -134,4 +134,3 @@ for j in range(0, num_paragraphs):
     predicted_string = prediction(net, word_to_id, id_to_word, always_capitalized, user_input, n, num_sentences)
     print(predicted_string)
     print('\n\n')
-"""
