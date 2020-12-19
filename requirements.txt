@@ -1,0 +1,4 @@
+streamlit==0.73.0
+torch==1.6.0
+numpy==1.19.2
+beautifulsoup4==4.9.3
