@@ -91,7 +91,7 @@ def prediction(network, word2id, id2word, should_capitalize, user_input, n, num_
 
 
 # won't run this stuff for now, just want the functions for streamlit
-
+"""
 #===========================================#
 #        Loads Model and word_to_id         #
 #===========================================#
@@ -134,3 +134,4 @@ for j in range(0, num_paragraphs):
     predicted_string = prediction(net, word_to_id, id_to_word, always_capitalized, user_input, n, num_sentences)
     print(predicted_string)
     print('\n\n')
+"""
