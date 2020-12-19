@@ -49,7 +49,7 @@ hidden_dim = 256        # size of the hidden state
 n_layers = 2            # number of LSTM layers
 
 # Training parameters
-epochs = 10 #10
+epochs = 14 #10
 learning_rate = 0.001
 clip = 1
 
@@ -93,7 +93,8 @@ for e in range(epochs):
 #=======================================#
 
 net.eval()
-torch.save(net, 'trained_model/trained_model.pt')
+torch.save(net, 'trained_model/trained_model_strict.pt')
 
+exit(0)
 with open('trained_model/word_to_id.json', 'w') as fp:
     json.dump(word_to_id, fp, indent=4)

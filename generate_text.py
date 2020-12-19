@@ -36,7 +36,7 @@ def add_formatting(list_of_ids, id2word, should_capitalize):
 #        Predict Next ID Function           #
 #===========================================#
 
-def predict_next_id(network, ids_list, batch_size=1):
+def predict_next_id(network, ids_list, batch_size=1, temp=0.8):
     softmax = nn.Softmax(dim=0)
 
     #batch size is 1 as it is a single input
@@ -48,11 +48,17 @@ def predict_next_id(network, ids_list, batch_size=1):
     output, hidden = network.forward(input, hidden)
 
     last_word_logits = output.squeeze()
-    predicted_probabilities = softmax(last_word_logits).detach().numpy()
 
-    # Sets probability of generating the <Unknown> token to 0, then adjusts other probabilities so they still sum to 1
+    predicted_probabilities = softmax(last_word_logits / temp).detach().numpy()
+
+    # Sets probability of generating the <Unknown> token to 0,
     predicted_probabilities[0] = 0
+
+    # Sets probability of repeating last token to 0
     predicted_probabilities[ids_list[-1]] = 0
+
+
+    # Adjusts so probabilities still sum to 1
     predicted_probabilities = predicted_probabilities / np.sum(predicted_probabilities)
 
     # Picks a probability-weighted random choice of the words
@@ -67,14 +73,14 @@ def predict_next_id(network, ids_list, batch_size=1):
 
 def prediction(network, word2id, id2word, should_capitalize, user_input, n, num_sentences):
         seed_text = preprocess.parse_and_clean(user_input)
-        ids = [word_to_id["."]] + [word_to_id[word] for word in seed_text.split()]
+        ids = [word2id["."]] + [word2id[word] for word in seed_text.split()]
 
         finished_sentences = 0
         while (finished_sentences < num_sentences):
             last_n_ids = ids[-n:]
             prediction = predict_next_id(network, last_n_ids)
             ids.append(prediction)
-            if prediction in [word_to_id[punc] for punc in [".", "!", "?"]]:
+            if prediction in [word2id["."], word2id["!"], word2id["?"]]: 
                 finished_sentences += 1
 
         predicted_string = add_formatting(ids, id2word, should_capitalize)
@@ -84,7 +90,8 @@ def prediction(network, word2id, id2word, should_capitalize, user_input, n, num_
 
 
 
-
+# won't run this stuff for now, just want the functions for streamlit
+"""
 #===========================================#
 #        Loads Model and word_to_id         #
 #===========================================#
@@ -97,9 +104,8 @@ with open('trained_model/always_capitalized.json') as json_file:
 
 id_to_word = ["_"] + [word for word, index in word_to_id.items()]
 
-net = torch.load('trained_model/trained_model.pt')
+net = torch.load('trained_model/trained_model_strict.pt')
 net.eval()
-
 
 
 
@@ -112,7 +118,7 @@ net.eval()
 
 n = 9
 num_sentences = 10
-num_paragraphs = 0
+num_paragraphs = 3
 user_input = ""
 
 
@@ -128,3 +134,4 @@ for j in range(0, num_paragraphs):
     predicted_string = prediction(net, word_to_id, id_to_word, always_capitalized, user_input, n, num_sentences)
     print(predicted_string)
     print('\n\n')
+"""
