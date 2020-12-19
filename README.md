@@ -1,14 +1,20 @@
 # Tolkein Text
-Tolkein Text is a personal project that I created to practice implementing Machine Learning, specifically NLP, in Pytorch. It uses a Neural Network Language Model to generate text based off *The Lord of the Rings*.
+Tolkein Text is live [here](https://share.streamlit.io/christian-doucette/tolkein_text)!
+
+I trained an LSTM neural network language model on *The Lord of the Rings*, and used it for text generation.
+### Motivation
+The motivation of this project was to gain experience with:
+- Completing a full NLP task
+- Implementing machine learning in Pytorch
+- Understanding modern architectures for neural network language models
+- Preprocessing and tokenizing raw text data
+- Applications of language models
 
 ### Some Examples
-"Before long the white moon stood in the wood."  
 "Arrows fell from the sky like lightning hurrying down."  
 "At that moment Faramir came in and gazed suddenly into the sweet darkness."  
 "Ever the great vale ran down into the darkness. Darker the leaves rolled suddenly through the summer mist."  
-"Then they felt once more: as swiftly as they were under the wind of the hills."  
 "And the moon was in the dark, and they lay all, grey and fading, terrible and fair."  
-"The weather pointed near the trees as the ring had lain."  
 
 These sentences definitely capture the feel of Tolkein's writing, but are all original sentences! I especially love the fact that it creates its own simile, "Arrows fell from the sky like lightning hurrying down," that does not appear in the original text.
 
@@ -33,3 +39,5 @@ Using the network architecture stated above and cross entropy loss, I find the w
 
 ### Text Generation
 By applying the softmax function to the output of the network, I get a probability distribution over all words in the vocabulary. Then, I take a weighted random choice of these to decide the next word.
+
+With the softmax function, I use a [temperature](https://medium.com/@majid.ghafouri/why-should-we-use-temperature-in-softmax-3709f4e0161#:~:text=Temperature%20is%20a%20hyper%2Dparameter,the%20logits%20before%20applying%20softmax.&text=Temperature%20therefore%20increases%20the%20sensitivity%20to%20low%20probability%20candidates) parameter of 0.8. This value punishes lower probabilities slightly more than the default value of 1. This increases the coherence of the generated text, and improves its adherence to grammatical rules.
