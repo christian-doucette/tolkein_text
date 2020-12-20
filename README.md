@@ -4,9 +4,9 @@ Tolkein Text is live [here](https://share.streamlit.io/christian-doucette/tolkei
 I trained an LSTM neural network language model on *The Lord of the Rings*, and used it for text generation.
 ### Motivation
 The motivation of this project was to gain experience with:
-- Completing a full NLP task
+- Breaking down and completing an NLP task
 - Implementing machine learning in Pytorch
-- Understanding modern architectures for neural network language models
+- Modern architectures for neural network language models
 - Preprocessing and tokenizing raw text data
 - Applications of language models
 
