@@ -19,12 +19,12 @@ def add_formatting(list_of_ids, id2word, should_capitalize):
 
 
         if (prev in [".", "!", "?"]) or (cur in should_capitalize and should_capitalize[cur]):
-            words[i] = cur.capitalize()
+            if words[i] != "<Unknown>":
+                words[i] = cur.capitalize()
 
     string = ' '.join(words[1:])
     string = re.sub('Mr ', 'Mr. ', string)             # Changes Mr back to Mr.
     string = re.sub(r'\s([,.!?:;])', r'\1', string)    # Removes sapce before punctuation
-    #string = re.sub(r"( \.| \,| \;| \:| \!| \?)", lambda x: f'{x.group(1)}', string)   # Removes extra space in front of punctuation
 
     return string
 
@@ -119,7 +119,7 @@ net.eval()
 n = 9
 num_sentences = 10
 num_paragraphs = 3
-user_input = "and I say to you, my dude"
+user_input = "christian is my name, christian"
 
 
 
