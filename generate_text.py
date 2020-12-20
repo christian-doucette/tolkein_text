@@ -104,7 +104,7 @@ with open('trained_model/always_capitalized.json') as json_file:
 
 id_to_word = ["<Unknown>"] + [word for word, index in word_to_id.items()]
 
-net = torch.load('trained_model/trained_model_strict.pt')
+net = torch.load('trained_model/trained_model.pt')
 net.eval()
 
 
