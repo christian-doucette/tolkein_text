@@ -95,6 +95,5 @@ for e in range(epochs):
 net.eval()
 torch.save(net, 'trained_model/trained_model.pt')
 
-exit(0)
 with open('trained_model/word_to_id.json', 'w') as fp:
     json.dump(word_to_id, fp, indent=4)
