@@ -8,7 +8,7 @@ import torch.nn as nn
 # This is the LSTM Neural Network Class. The architecture of the network is this:
 # input -> embedding layer -> LSTM layers -> dropout layer -> fully connected linear layer -> output
 
-# input is a list of 19 words represented by their ids in the vocabulary, label is the following word
+# input is a list of n=9 words represented by their ids in the vocabulary, label is the following word
 
 # output is a list of logits over the set of words, where higher means a higher chance that that word follows
 # applying softmax to the output turns it into a pprobability distribution over all the words
@@ -46,9 +46,8 @@ class LSTM(nn.Module):
 
         # pass through embeddings layer
         embeddings_out = self.embedding(input)
-        #print(f'Shape after Embedding: {embeddings_out.shape}')
 
-        # pass through LSTM layers, then stack up lstm outputs
+        # pass through LSTM layers
         lstm_out, hidden = self.lstm(embeddings_out, hidden)
 
         # slice lstm_out to just get output of last element of the input sequence
@@ -60,7 +59,7 @@ class LSTM(nn.Module):
         #pass through fully connected layer - don't need to use Softmax activation func as CrossEntropyLoss applies it
         fc_out = self.fc(dropout_out)
 
-        # return last sigmoid output and hidden state
+        # return final output and hidden state
         return fc_out, hidden
 
 
