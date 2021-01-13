@@ -1,7 +1,9 @@
 # Tolkein Text
 Tolkein Text is live [here](https://share.streamlit.io/christian-doucette/tolkein_text)!
 
-I trained an LSTM neural network language model on *The Lord of the Rings*, and used it for text generation.  
+I trained an LSTM neural network language model on *The Lord of the Rings*, and used it for text generation.
+&nbsp;  
+&nbsp;  
 
 
 ## Motivation
@@ -11,6 +13,8 @@ The motivation of this project was to gain experience with:
 - Modern architectures for neural network language models
 - Preprocessing and tokenizing raw text data
 - Applications of language models  
+&nbsp;  
+&nbsp;  
 
 
 ## Some Examples
@@ -20,6 +24,8 @@ The motivation of this project was to gain experience with:
 "And the moon was in the dark, and they lay all, grey and fading, terrible and fair."  
 
 These sentences definitely capture the feel of Tolkein's writing, but are all original sentences! I especially love the fact that it creates its own simile, "Arrows fell from the sky like lightning hurrying down," that does not appear in the original text.  
+&nbsp;  
+&nbsp;  
 
 
 ## Preprocessing
@@ -30,6 +36,8 @@ The preprocessing stage can be broken down into these steps:
 4. Map each word in the text to its id
 5. Add each word_id in the text to dataset as a label with the n word_ids before it as its feature (currently using n=9)
 6. This list of (Feature, Label) pairs is the training data  
+&nbsp;  
+&nbsp;  
 
 
 ## Network Architecture
@@ -38,10 +46,14 @@ Input -> Embedding layer -> LSTM layers -> Dropout layer -> Fully Connected Line
 
 Input is the n preceding word_ids I mentioned before.  
 Output is a list of vocab_size values, where a higher value means that that word is more likely to occur next.  
+&nbsp;  
+&nbsp;  
 
 
 ## Network Training
 Using the network architecture stated above and cross entropy loss, I find the weights that minimize loss on the training data. These weights are calculated with gradient descent using Pytorch's Autograd package.  
+&nbsp;  
+&nbsp;  
 
 
 ## Text Generation
