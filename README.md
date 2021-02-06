@@ -60,3 +60,8 @@ Using the network architecture stated above and cross entropy loss, I find the w
 By applying the softmax function to the output of the network, I get a probability distribution over all words in the vocabulary. Then, I take a weighted random choice of these to decide the next word.
 
 With the softmax function, I use a [temperature](https://medium.com/@majid.ghafouri/why-should-we-use-temperature-in-softmax-3709f4e0161#:~:text=Temperature%20is%20a%20hyper%2Dparameter,the%20logits%20before%20applying%20softmax.&text=Temperature%20therefore%20increases%20the%20sensitivity%20to%20low%20probability%20candidates) parameter of 0.8. This value punishes lower probabilities slightly more than the default value of 1. This increases the coherence of the generated text, and improves its adherence to grammatical rules.
+&nbsp;  
+&nbsp;  
+
+## Streamlit
+After training the model, I set it up with simple web interface using [Streamlit](https://www.streamlit.io/). I wanted to allow other people to try generating text with the model and running custom input through it. I chose Streamlit since it allowed me to create and host the model's web interface very easily.
